@@ -1,15 +1,23 @@
-const { StatusCodes } = require('http-status-codes');
+const { StatusCodes } = require('http-status-code');
 const Brand = require('../models/Brand');
 const { BadRequestError, NotFoundError } = require('../errors')
 
 
 const getAllBrands = async ( req, res) => {
-    const brands = await Brand.find({ createdBy: req.user.userId }).sort('name');
+    const brands = await Brand.find({ createdBy: req.user.userId }).sort({ name: 1 });
     res.status(StatusCodes.OK).json({ brands, count: brands.length})
 };
 
 const getBrand = async ( req, res) => {
-    res.send('Get brand')
+    const { user: { userId }, params: { id: brandId } } = req;
+
+    const brand = await Brand.findOne({ 
+        _id: brandId, createdBy: userId
+    });
+    if (!brand) {
+        throw new NotFoundError(`No brand with id ${brandId}`)
+    };
+    res.status(StatusCodes.OK).json({ brand })
 };
 
 const createBrand = async ( req, res) => {
@@ -19,11 +27,37 @@ const createBrand = async ( req, res) => {
 };
 
 const updateBrand = async ( req, res) => {
-    res.send('Update brand')
+    const { 
+        body: { name, category, description, logo, website },
+        user: { userId }, 
+        params: { id: brandId } 
+    } = req;
+
+    if (name === "" || category === "" || description === "" || logo === "" || website === "") {
+        throw new BadRequestError('Fields cannot be empty')
+    }
+    const brand = await Brand.findByIdAndUpdate({ 
+        _id: brandId, createdBy: userId }, 
+        req.body, 
+        { new: true, runValidators: true }
+    );
+    if (!brand) {
+        throw new NotFoundError(`No brand with id ${brandId}`)
+    };
+    res.status(StatusCodes.OK).json({ brand })
 };
 
 const deleteBrand = async ( req, res) => {
-    res.send('Delete brand')
+    const { user: { userId }, params: { id: brandId } } = req;
+    const brand = await Brand.findByIdAndDelete({ 
+        _id: brandId, createdBy: userId
+    });
+    if (!brand) {
+        throw new NotFoundError(`No brand with id ${brandId}`)
+    };
+    res.status(StatusCodes.OK).send()
+
+
 };
 
 
