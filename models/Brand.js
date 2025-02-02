@@ -24,6 +24,22 @@ const BrandSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Please provide the brand website']
     },
+    ecoFriendly: {
+        type: Boolean,
+        default: false
+    },
+    nonToxic: {
+        type: Boolean,
+        default: false
+    },
+    plasticFree: {
+        type: Boolean,
+        default: false
+    },
+    veganCrueltyFree: {
+        type: Boolean,
+        default: false
+    },
     createdBy: {
         type: mongoose.Types.ObjectId,
         ref: 'User',

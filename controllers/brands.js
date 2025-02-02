@@ -1,10 +1,28 @@
-const { StatusCodes } = require('http-status-code');
+const { StatusCodes } = require('http-status-codes');
 const Brand = require('../models/Brand');
 const { BadRequestError, NotFoundError } = require('../errors')
 
 
 const getAllBrands = async ( req, res) => {
-    const brands = await Brand.find({ createdBy: req.user.userId }).sort({ name: 1 });
+    const queryObject = { createdBy: req.user.userId };
+
+    if (req.query.ecoFriendly) {
+        queryObject.ecoFriendly = req.query.ecoFriendly === "true"
+    };
+
+    if (req.query.nonToxic) {
+        queryObject.nonToxic = req.query.ecoFriendly === "true"
+    };
+
+    if (req.query.plasticFree) {
+        queryObject.plasticFree = req.query.ecoFriendly === "true"
+    };
+
+    if (req.query.veganCrueltyFree) {
+        queryObject.veganCrueltyFree = req.query.ecoFriendly === "true"
+    };
+
+    const brands = await Brand.find(queryObject).sort({ name: 1 });
     res.status(StatusCodes.OK).json({ brands, count: brands.length})
 };
 
