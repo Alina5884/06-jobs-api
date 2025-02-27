@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Brands List</title>
+  </head>
+
+  <body>
+    <h1>Brands List</h1>
+    <hr />
+    <p id="message"></p>
+    <hr />
+
+    <!-- Logon/Register -->
+    <div id="logon-register" style="display:none;">
+      <button type="button" id="logon">Log In</button>
+      <button type="button" id="register">Register</button>
+    </div>
+
+    <!-- Logon Form -->
+    <div id="logon-div" style="display:none;">
+      <form>
+        <div>
+          <label for="email">Email:</label>
+          <input type="email" id="email" />
+        </div>
+        <div>
+          <label for="password">Password:</label>
+          <input type="password" id="password" />
+        </div>
+        <button type="button" id="logon-button">Log In</button>
+        <button type="button" id="logon-cancel">Cancel</button>
+      </form>
+    </div>
+
+    <!-- Register Form -->
+    <div id="register-div" style="display:none;">
+      <form>
+        <div>
+          <label for="name">Name:</label>
+          <input type="text" id="name" />
+        </div>
+        <div>
+          <label for="email1">Email:</label>
+          <input type="email" id="email1" />
+        </div>
+        <div>
+          <label for="password1">Password:</label>
+          <input type="password" id="password1" />
+        </div>
+        <div>
+          <label for="password2">Verify password:</label>
+          <input type="password" id="password2" />
+        </div>
+        <button type="button" id="register-button">Register</button>
+        <button type="button" id="register-cancel">Cancel</button>
+      </form>
+    </div>
+
+    <!-- Brands List -->
+    <div id="brands" style="display:none;">
+      <div id="brands-container">
+        <table id="brands-table">
+          <thead>
+            <tr id="brands-table-header">
+              <th>Brand Logo</th>
+              <th>Brand Name</th>
+              <th>Category</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="brand-card" id="brand-1">
+              <td><img src="./images/logo.svg" alt="brand logo" class="brand-logo" style="max-width: 150px; height: auto;"/></td>
+              <td>Brand Name</td>
+              <td>Category: Clothing</td>
+              <td class="brand-filters">
+                <span class="eco-friendly">🌱 EF</span>
+                <span class="non-toxic">🚫 NT</span>
+                <span class="plastic-free">♻️ PF</span>
+                <span class="vegan">🐰 VC</span>
+              </td>
+              <td>
+                <button class="view-details">View Details</button>
+              <button class="edit-brand" data-id="brand-id-here">Edit</button>
+              <button class="delete-brand">Delete</button>
+              </td>
+            </tr>
+            <tr class="brand-details" style="display: none;">
+              <td colspan="5">
+                <p>Description: A description of the brand.</p>
+              <p>Website: <a href="https://brandwebsite.com" target="_blank">brandwebsite.com</a></p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <button type="button" id="add-brand">Add Brand</button>
+      <button type="button" id="logoff">Log Out</button>
+    </div>
+
+    <!-- Modal for adding or editing brand -->
+    <div id="add-brand-modal" style="display:none;">
+      <form id="add-brand-form">
+        <div>
+          <label for="brand-logo">Logo URL:</label>
+          <input type="text" id="brand-logo" />
+        </div>
+        <div>
+          <label for="brand-name">Brand Name:</label>
+          <input type="text" id="brand-name" />
+        </div>
+        <div>
+          <label for="category">Category:</label>
+          <input type="text" id="category" />
+        </div>
+        <div>
+          <label for="description">Description:</label>
+          <input type="text" id="description" />
+        </div>
+        <div>
+          <label for="website">Website:</label>
+          <input type="text" id="website" />
+        </div>
+        <div>
+          <label for="eco-friendly">Eco-Friendly:</label>
+          <input type="checkbox" id="eco-friendly" />
+        </div>
+        <div>
+          <label for="non-toxic">Non-Toxic:</label>
+          <input type="checkbox" id="non-toxic" />
+        </div>
+        <div>
+          <label for="plastic-free">Plastic-Free:</label>
+          <input type="checkbox" id="plastic-free" />
+        </div>
+        <div>
+          <label for="vegan-cruelty-free">Vegan & Cruelty-Free:</label>
+          <input type="checkbox" id="vegan-cruelty-free" />
+        </div>
+        <button type="submit" id="save-brand">Save</button>
+        <button type="button" id="close-modal">Cancel</button>
+      </form>
+    </div>
+
+    <script src="./index.js" type="module"></script>
+  </body>
+</html>

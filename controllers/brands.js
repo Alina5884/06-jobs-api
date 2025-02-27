@@ -1,10 +1,27 @@
-const { StatusCodes } = require('http-status-code');
+const { StatusCodes } = require('http-status-codes');
 const Brand = require('../models/Brand');
 const { BadRequestError, NotFoundError } = require('../errors')
 
-
 const getAllBrands = async ( req, res) => {
-    const brands = await Brand.find({ createdBy: req.user.userId }).sort({ name: 1 });
+    const queryObject = { createdBy: req.user.userId };
+
+    if (req.query.ecoFriendly) {
+        queryObject.ecoFriendly = req.query.ecoFriendly === 'true';
+    };
+
+    if (req.query.nonToxic) {
+        queryObject.nonToxic = req.query.nonToxic === 'true';
+    };
+
+    if (req.query.plasticFree) {
+        queryObject.plasticFree = req.query.plasticFree === 'true';
+    };
+
+    if (req.query.veganCrueltyFree) {
+        queryObject.veganCrueltyFree = req.query.veganCrueltyFree === 'true';
+    };
+    
+    const brands = await Brand.find(queryObject).sort({ name: 1 });
     res.status(StatusCodes.OK).json({ brands, count: brands.length})
 };
 
@@ -55,11 +72,8 @@ const deleteBrand = async ( req, res) => {
     if (!brand) {
         throw new NotFoundError(`No brand with id ${brandId}`)
     };
-    res.status(StatusCodes.OK).send()
-
-
+    res.status(StatusCodes.OK).json({ msg: "The entry was deleted" })
 };
-
 
 module.exports = {
     getAllBrands,
